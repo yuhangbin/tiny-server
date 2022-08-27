@@ -1,0 +1,7 @@
+syntax = "proto3";
+option java_package = "org.example.protobuf";
+option java_multiple_files = true;
+
+message Hello {
+  string hello = 1;
+}
