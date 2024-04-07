@@ -10,6 +10,7 @@ import org.example.protobuf.Hello;
  * @author yuhangbin
  * @date 2022/8/27
  **/
+@ChannelHandler.Sharable
 public class ServerHandler extends SimpleChannelInboundHandler<GeneratedMessageV3> {
 
 	public static class ServerHandlerHolder{
