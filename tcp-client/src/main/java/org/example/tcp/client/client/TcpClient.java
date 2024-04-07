@@ -7,4 +7,8 @@ package org.example.tcp.client.client;
 public interface TcpClient {
 
 	void start();
+
+	boolean send(Object msg);
+
+	void stop();
 }

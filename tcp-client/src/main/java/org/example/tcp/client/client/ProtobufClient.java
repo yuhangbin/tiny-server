@@ -22,17 +22,30 @@ import org.example.tcp.client.handler.ClientHandler;
 public class ProtobufClient implements TcpClient{
 
 	public static final int PORT = 10101;
-	public static final String HOSTNAME = "127.0.0.1";
+//	public static final String HOSTNAME = "127.0.0.1";
+	public static final String HOSTNAME = "101.43.99.81";
 	public EventLoopGroup group;
 
 	@Override public void start() {
 		try {
 			doStart();
-		}catch (Exception e) {
+		}catch (Throwable e) {
 			e.printStackTrace();
 		}finally {
-			group.shutdownGracefully();
+			if (group != null) {
+				group.shutdownGracefully();
+			}
 		}
+	}
+
+	@Override
+	public void stop() {
+
+	}
+
+	@Override
+	public boolean send(Object msg) {
+		return false;
 	}
 
 	private void doStart() throws Exception{

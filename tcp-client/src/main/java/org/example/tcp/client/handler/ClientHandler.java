@@ -1,6 +1,7 @@
 package org.example.tcp.client.handler;
 
 import com.google.protobuf.GeneratedMessageV3;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.example.protobuf.Hello;
@@ -9,6 +10,7 @@ import org.example.protobuf.Hello;
  * @author yuhangbin
  * @date 2022/8/28
  **/
+@ChannelHandler.Sharable
 public class ClientHandler extends SimpleChannelInboundHandler<GeneratedMessageV3> {
 
 	public static class ClientHandlerHolder {
@@ -41,4 +43,5 @@ public class ClientHandler extends SimpleChannelInboundHandler<GeneratedMessageV
 		cause.printStackTrace();
 		ctx.channel().close();
 	}
+
 }
