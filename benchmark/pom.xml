@@ -39,7 +39,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.example.Main</mainClass>
+                            <mainClass>org.example.benchmark.ProtoBufTCPServerBenchmark</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

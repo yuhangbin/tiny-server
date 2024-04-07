@@ -1,10 +1,7 @@
 package org.example.tcp.client.client;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -25,6 +22,7 @@ public class ProtobufClient implements TcpClient{
 //	public static final String HOSTNAME = "127.0.0.1";
 	public static final String HOSTNAME = "101.43.99.81";
 	public EventLoopGroup group;
+	private Channel channel;
 
 	@Override public void start() {
 		try {
@@ -40,12 +38,18 @@ public class ProtobufClient implements TcpClient{
 
 	@Override
 	public void stop() {
+		try {
+			channel.closeFuture().sync();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	@Override
 	public boolean send(Object msg) {
-		return false;
+		ChannelFuture channelFuture = channel.writeAndFlush(msg);
+		return channelFuture.isSuccess();
 	}
 
 	private void doStart() throws Exception{
@@ -65,8 +69,8 @@ public class ProtobufClient implements TcpClient{
 					pipeline.addLast(new ProtobufEncoder());
 				}
 			});
-		Channel channel = bootstrap.connect(HOSTNAME, PORT).sync().channel();
-
-		channel.closeFuture().sync();
+		channel = bootstrap.connect(HOSTNAME, PORT).sync().channel();
 	}
+
+
 }

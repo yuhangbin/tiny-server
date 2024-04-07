@@ -1,5 +1,6 @@
 package org.example.benchmark;
 
+import org.example.protobuf.Hello;
 import org.example.tcp.client.client.ProtobufClient;
 import org.example.tcp.client.client.TcpClient;
 
@@ -12,8 +13,7 @@ public class ProtoBufTCPServerBenchmark {
         try (ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor()){
             for (int i = 0; i < 100000; i++) {
                 executorService.execute(() -> {
-
-
+                    new Client().run();
                 });
             }
         }
@@ -24,7 +24,13 @@ public class ProtoBufTCPServerBenchmark {
         public void run() {
             TcpClient tcpClient = new ProtobufClient();
             tcpClient.start();
-            tcpClient.send()
+            for (int j = 0; j < 10; j++) {
+                try {
+                    tcpClient.send(Hello.getDefaultInstance());
+                    Thread.sleep(100);
+                } catch (Throwable ignored) {
+                }
+            }
         }
     }
 
